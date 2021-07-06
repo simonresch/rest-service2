@@ -1,0 +1,54 @@
+{
+  "webApplications": [
+    {
+      "applicationName": "Application",
+      "package": "hello",
+      "artifact": "build/libs/gs-rest-service-0.1.0.jar",
+      "detectedFrameworks": [
+        "SPRING_BOOT",
+        "SPRING"
+      ]
+    },
+    {
+      "applicationName": "Application",
+      "package": "hello",
+      "artifact": "target/gs-rest-service-0.1.0.jar",
+      "detectedFrameworks": [
+        "SPRING_BOOT",
+        "SPRING"
+      ]
+    }
+  ],
+  "projectExceptionPolicy": {
+    "policy": [
+      {
+        "enabled": true,
+        "responsePolicy": {
+          "responseMatcher": "CODE_STARTS_WITH",
+          "code": 2
+        }
+      },
+      {
+        "enabled": true,
+        "responsePolicy": {
+          "responseMatcher": "CODE_STARTS_WITH",
+          "code": 4
+        }
+      },
+      {
+        "enabled": true,
+        "responsePolicy": {
+          "code": 302
+        }
+      },
+      {
+        "enabled": true,
+        "exceptionPolicy": {
+          "Exception": "java.lang.IllegalArgumentException",
+          "exceptionStrategy": "STACKTRACE_CONTAINS",
+          "content": "org.springframework.web.util.UriComponentsBuilder"
+        }
+      }
+    ]
+  }
+}

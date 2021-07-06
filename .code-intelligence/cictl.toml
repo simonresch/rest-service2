@@ -1,0 +1,5 @@
+server = "fuzzing.example.com:6773"
+
+[sync]
+  project = ""
+  remote = "grpc-api.code-intelligence.com:443"

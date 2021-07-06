@@ -1,0 +1,70 @@
+{
+  "name": "projects/rest-service-07e06edf",
+  "displayName": "rest-service",
+  "buildScriptContent": "#!/bin/bash -euv\n# Here you can provide a script to build your project. Here you should provide \n# the steps as you would normally build your code. The CI security suite will \n# then automatically perform all needed adjustments necessary to build the fuzzers\n# based on the provided configurations.\n\nmvn clean package -DskipTests --batch-mode --quiet",
+  "details": {
+    "javaDetails": {
+      "jars": [
+        "gradle/wrapper/gradle-wrapper.jar",
+        "target/gs-rest-service-0.1.0.jar"
+      ],
+      "packages": [
+        "hello",
+        "hello.controller",
+        "hello.model",
+        "hello.service"
+      ]
+    },
+    "springBootDetails": {
+      "applications": [
+        {
+          "applicationName": "Application",
+          "package": "hello",
+          "jars": [
+            "target/gs-rest-service-0.1.0.jar"
+          ],
+          "controllers": [
+            "/int_compare",
+            "/pojo_mutation_list",
+            "/pojo_mutation_strings",
+            "/sql_injection",
+            "/string_compare",
+            "/system_test"
+          ],
+          "version": "2.1.6.RELEASE"
+        }
+      ],
+      "projectExceptionPolicy": {
+        "policy": [
+          {
+            "enabled": true,
+            "responsePolicy": {
+              "responseMatcher": "CODE_STARTS_WITH",
+              "code": 2
+            }
+          },
+          {
+            "enabled": true,
+            "responsePolicy": {
+              "responseMatcher": "CODE_STARTS_WITH",
+              "code": 4
+            }
+          },
+          {
+            "enabled": true,
+            "exceptionPolicy": {
+              "Exception": "java.lang.IllegalArgumentException",
+              "exceptionStrategy": "STACKTRACE_CONTAINS",
+              "content": "org.springframework.web.util.UriComponentsBuilder"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "projectEnvironment": {
+    "dockerBuild": {
+      "name": "cifuzz/builder-rest-service"
+    }
+  }
+}
